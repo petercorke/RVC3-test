@@ -12,7 +12,7 @@ on:
       # Allows you to specify release name when running action manually
       releaseName:
         description: 'Release name'
-        default: ${{ github.sha }}
+        default: github.sha
 
 jobs:
   my-job:
