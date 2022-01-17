@@ -12,7 +12,8 @@ on:
       # Allows you to specify release name when running action manually
       releaseName:
         description: 'Release name'
-        default: github.sha
+        required: true
+        default: Test
 
 jobs:
   my-job:
@@ -30,9 +31,18 @@ jobs:
         with:
           # Package mltbx file. Ensure that mltbx file exists before returning.
           command: matlab.addons.toolbox.packageToolbox('newtoolbox/RVC3.prj'), assert(exist('newtoolbox/RVC3.mltbx', 'file'));
-      - name: Create new release
+      - name: Create manual release
+        # This step only runs for a manual release
         uses: softprops/action-gh-release@v0.1.14
+        if: startsWith(github.ref, 'refs/tags/') == false
         with:
-          files: newtoolbox/RVC3.mltbx          
+          files: newtoolbox/RVC3.mltbx
+          body: "Installable MATLAB Toolbox"
           tag_name: ${{ github.event.inputs.releaseName }}
-    
+      - name: Create tagged release
+        # This step runs when a tag is pushed to the repository
+        uses: softprops/action-gh-release@v0.1.14
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: newtoolbox/RVC3.mltbx
+          body: "Installable MATLAB Toolbox"
