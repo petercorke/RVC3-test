@@ -1,4 +1,4 @@
-name: Package the latest toolbox code and release as MLTBX.
+name: Package and release MLTBX.
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -15,8 +15,8 @@ jobs:
       - name: Set up MATLAB
         # This uses the latest release of MATLAB. Can specify "release" if needed.
         uses: matlab-actions/setup-matlab@v1.0.1
-      - run: echo "MATLAB has been setup ${{ github.repository }}."  
-      # - name: Run script
-      # uses: matlab-actions/run-command@v1
-      # with:
-      # command: myscript
+      - name: Package mltbx
+        uses: matlab-actions/run-command@v1.0.1
+        with:
+          # Package mltbx file. Ensure that mltbx file exists before returning.
+          command: matlab.addons.toolbox.packageToolbox('newtoolbox/RVC3.prj'), assert(exist('newtoolbox/RVC3.mltbx', 'file'));
