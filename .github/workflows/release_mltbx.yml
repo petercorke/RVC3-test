@@ -8,6 +8,11 @@ on:
       
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      # Allows you to specify release name when running action manually
+      releaseName:
+        description: 'Release name'
+        default: ${{ github.sha }}
 
 jobs:
   my-job:
@@ -28,5 +33,6 @@ jobs:
       - name: Create new release
         uses: softprops/action-gh-release@v0.1.14
         with:
-          files: newtoolbox/RVC3.mltbx
+          files: newtoolbox/RVC3.mltbx          
+          tag_name: ${{ github.event.inputs.releaseName }}
     
