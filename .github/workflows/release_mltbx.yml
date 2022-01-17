@@ -1,4 +1,4 @@
-name: Package and release MLTBX.
+name: Package and release MLTBX
 
 on:
   # Automatically run this action when a new v* tag is created
@@ -16,7 +16,7 @@ on:
 
 jobs:
   my-job:
-    name: Run MATLAB Script
+    name: Release MLTBX
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
